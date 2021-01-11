@@ -1,0 +1,95 @@
+{% load static %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>View List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+            .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    width: 150px;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }        
+            
+    .button5 {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    border-radius: 10px;
+  }
+  
+  .button5:hover {
+    background-color: #555555;
+    color: white;
+  }
+  .button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+  width: 200px;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+        </style>
+    </head>
+    <body>
+        <div class="logout float-right col-lg-2"><a href="{% url 'Logout' %}"><button class="button button5">Logout</button></a></div>
+        <div class="container mt-5">
+            <!-- top -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>View Grocery List</h1>
+                </div>
+                <form method="POST" action="{% url 'Filter' %}">
+                    {% csrf_token %}
+                <div class="col-lg-6 float-right">
+                    <div class="row">
+                            <!-- Date Filtering-->
+                            <input style="width: 250px;" type="date" class="form-control" value="date" name="date">
+                            <input type="submit" class="btn btn-danger" value="filter">
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="logout col-lg-2"><a href="{% url 'Add'%}"><button class="button button2">Add New Item</button></a></div>
+            <!-- // top -->
+            <!-- Grocery Cards -->
+            {% if items  %}
+            <div class="row mt-4">
+                <!--- -->
+                <!-- Loop This -->
+                {% for item in items %}
+                <div class="col-lg-4" style="margin-top: 40px;">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ item.item_name }}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">{{ item.item_quantity }}</h6>
+                          <p class="text-success">{{ item.item_status }}</p>
+                          <button style="background-color: rgb(236, 191, 139);"><a href="{% url 'Delete' item.pk %}">Delete This Item</a></button>
+                          <button style="background-color: rgb(238, 139, 205);"><a href="{% url 'Edit' item.pk %}">Update This Item</a></button>
+                        </div>
+                      </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="align-content: center;">
+                <br><br><br><h2><b>There is no item Added. Please add a new item.</b></h2>
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

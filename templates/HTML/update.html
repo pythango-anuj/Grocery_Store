@@ -1,0 +1,41 @@
+{% load static %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Update List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Update Grocery List</h1>
+            <form method="POST" action="{% url 'Update' item.pk %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="item_name">Item name</label>
+                    <input type="text" id="item_name" class="form-control" placeholder="Item name" value="{{ item.item_name }}" name="item_name"/>
+                </div>
+                <div class="form-group">
+                    <label for="item_quantity">Item quantity</label>
+                    <input type="text" id="item_quantity" class="form-control" placeholder="Item quantity" value="{{ item.item_quantity }}" name="item_quantity"/>
+                </div>
+                <div class="form-group">
+                    <label for="item_status">Item status</label>
+                    <select class="form-control" name="item_status">
+                        <option value="0" selected>SELECT CURRENT STATUS</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="BOUGHT">BOUGHT</option>
+                        <option value="NOT AVAILABLE">NOT AVAILABLE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" class="form-control" placeholder="Date" value="{{ item.date }}" name="date">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </body> 
+</html>
